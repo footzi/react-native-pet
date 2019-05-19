@@ -1,27 +1,19 @@
 import React, { Component } from "react";
-import Head from "../components/Head/Head";
-import Link from "next/link";
+import { connect } from "react-redux";
 
-class Test extends Component {
+class Page extends Component {
+    static getInitialProps({ store, isServer, pathname, query }) {
+        store.dispatch({ type: "FOO", payload: "foo" }); // component will be able to read from store's state when rendered
+        return { custom: "custom" }; // you can pass some custom props to component from here
+    }
     render() {
         return (
-            <div className="Blog">
-                <Head title="Blog" />
-                <h1>Hello, blog page!</h1>
-                <Link href="/about">
-                    <a>About</a>
-                </Link>
-                <br />
-                <Link href="/blog">
-                    <a>Blog</a>
-                </Link>
-                <br />
-                <Link href="/">
-                    <a>Home</a>
-                </Link>
+            <div>
+                <div>Prop from Redux {this.props.foo}</div>
+                <div>Prop from getInitialProps {this.props.custom}</div>
             </div>
         );
     }
 }
 
-export default Test;
+export default connect(state => state)(Page);

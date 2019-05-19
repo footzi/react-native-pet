@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Head from "../../components/Head/Head";
 import Link from "next/link";
 import "./Home.scss";
@@ -26,4 +27,10 @@ class Home extends Component {
     }
 }
 
-export default Home;
+const mapStateToProps = state => {
+    return {
+        todos: state.todos
+    };
+};
+
+export default connect(mapStateToProps)(Home);
